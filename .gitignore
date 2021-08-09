@@ -33,11 +33,11 @@ temp
 css
 
 # Visual Studio
-visualc/x64
-visualc/Debug
-visualc/Release
-visualc/target
-visualc/build
+Debug/
+Release/
+target/
+build/
+.vs/
 
 # Created by https://www.gitignore.io/api/c
 
