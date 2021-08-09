@@ -1,0 +1,7 @@
+﻿  foundation.c
+  cssparser_lex.c
+  cssparser_tab.c
+  cssparser.c
+  selector.c
+  tokenizer.c
+  cssparser.vcxproj -> C:\Users\cheungmine\Workspace\github.com\katana-parser\msvc\build\x64\Release\libcssparser.lib
