@@ -1,8 +1,0 @@
-﻿  tokenizer.c
-  selector.c
-  cssparser.c
-  cssparser_tab.c
-  cssparser_lex.c
-  foundation.c
-  正在生成代码...
-  cssparser.vcxproj -> C:\Users\cheungmine\Workspace\github.com\katana-parser\msvc\build\x64\Debug\libcssparser.lib

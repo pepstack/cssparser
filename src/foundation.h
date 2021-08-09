@@ -64,11 +64,13 @@ void cssprsr_string_prepend_characters(struct CssInternalParser* parser, const c
 
 // Transforms a CssParserString to characters.
 const char* cssprsr_string_to_characters(struct CssInternalParser * parser, const CssParserString* str);
+
 // Transforms a CssParserString to characters with a char prepended at the start of the CssParserString.
 const char* cssprsr_string_to_characters_with_prefix_char(struct CssInternalParser * parser, const CssParserString* str, const char prefix);
     
 // Appends a string onto the end of the CssParserString.
 void cssprsr_string_append_string(struct CssInternalParser* parser, CssParserString* str, CssParserString* output);
+
 // Returns a bool value that indicates whether a given string matches the beginning characters of the receiver.
 bool cssprsr_string_has_prefix(const char* str, const char* prefix);
 
@@ -84,8 +86,7 @@ typedef struct {
  *  Array 
  */
 // Initializes a new CssArray with the specified initial capacity.
-void cssprsr_array_init(struct CssInternalParser* parser, size_t initial_capacity,
-                       CssArray* array);
+void cssprsr_array_init(struct CssInternalParser* parser, size_t initial_capacity, CssArray* array);
 
 // Frees the memory used by an CssArray.  Does not free the contained
 // pointers, but you should free the pointers if necessary.
@@ -101,8 +102,7 @@ void* cssprsr_array_pop(struct CssInternalParser* parser, CssArray* array);
 
 // Inserts an element at a specific index.  This is potentially O(N) time, but
 // is necessary for some of the spec's behavior.
-void cssprsr_array_insert_at(struct CssInternalParser* parser, void* element, int index,
-                            CssArray* array);
+void cssprsr_array_insert_at(struct CssInternalParser* parser, void* element, int index, CssArray* array);
 
 // Removes an element from the array, or does nothing if the element is not in
 // the array.

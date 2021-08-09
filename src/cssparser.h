@@ -26,6 +26,7 @@
 #define _CSS_PARSER__API_
 
 #include <stdio.h>
+#include <string.h>
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -34,6 +35,7 @@ extern "C" {
 #endif
 
 #define CSS_ERROR_MSG_SIZE 128
+
 
 typedef enum {
     CssRuleUnkown,

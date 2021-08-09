@@ -213,13 +213,15 @@ double cssprsr_characters_to_double(const char* data, size_t length, bool* ok)
     }
     
     char* bytes = malloc(sizeof(char) * (length + 1));
-    for (unsigned i = 0; i < length; ++i)
+    for (unsigned i = 0; i < length; ++i) {
         bytes[i] = data[i] < 0x7F ? data[i] : '?';
+    }
     bytes[length] = '\0';
     char* end;
     double val = strtod(bytes, &end);
-    if (ok)
+    if (ok) {
         *ok = (end == 0 || *end == '\0');
+    }
 	free(bytes);
     return val;
 }

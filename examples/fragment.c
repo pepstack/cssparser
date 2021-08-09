@@ -48,10 +48,8 @@ int main(int argc, const char * argv[]) {
     StopWatchEnd(CssParseFile);
     css_dump_output(output);
     css_destroy_output(output);
-    
-//    printf("\n\nTest:\n");
-//    test();
 }
+
 
 void test() {
     char * str = NULL;
