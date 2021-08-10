@@ -89,3 +89,4 @@ References
 * [reworkcss/css](https://github.com/reworkcss/css)
 * [Official W3C Test Suites](http://www.w3.org/Style/CSS/Test/)
 * [semantic versioning](http://semver.org/)
+* [css parser in JavaScript](https://github.com/jotform/css.js)

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>css js parser</title>
+  <script type="text/javascript" src="css.min.js"></script>
+  <script type="text/javascript">
+    var cssString = "hr {color: sienna;}" +
+        "p {margin-left: 20px;color:red;}" +
+        "body {" +
+        "    background-image: url(\"images/back40.gif\");" +
+        "}" +
+        "div {    color:black;}";
+
+    // initialize parser object
+    var parser = new cssjs();
+
+    // parse css string
+    var parsed = parser.parseCSS(cssString);
+
+    console.log(parsed);
+  </script>
+</head>
+<body>
+  <p>A lightweight, battle tested, fast, css parser in JavaScript</p>
+</body>
+</html>
