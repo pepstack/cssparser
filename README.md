@@ -4,7 +4,7 @@
 
 CssParser originally forked from [katana-parser](https://gitee.com/mirrors/katana-parser), and I make some changes.
 
-CssParser is an implementation of the [CSS][] \(Cascading Style Sheet\) parsing algorithm implemented as a pure C library with no outside dependencies. It's designed to serve as a building block for other tools and libraries such as linters, validators, templating languages, and refactoring and analysis tools.
+CssParser is an implementation of the [CSS](Cascading Style Sheet) parsing algorithm implemented as a pure C library with no outside dependencies. It's designed to serve as a building block for other tools and libraries such as linters, validators, templating languages, and refactoring and analysis tools.
 
 CssParser is inspired by [Google Gumbo](https://github.com/google/gumbo-parser), so it has some goals and features same as Gumbo.
 
@@ -84,8 +84,14 @@ References
 ==========
 
 [CSS](http://www.w3.org/Style/CSS/current-work)
+
 [CSS-syntax](http://www.w3.org/TR/css3-syntax)
+
 [Gumbo H5 Parser](https://github.com/google/gumbo-parser)
+
 [reworkcss/css](https://github.com/reworkcss/css)
+
 [Official W3C Test Suites](http://www.w3.org/Style/CSS/Test/)
+
 [semantic versioning](http://semver.org/)
+
