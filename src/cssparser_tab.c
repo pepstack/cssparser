@@ -1,46 +1,48 @@
-﻿/* A Bison parser, made by GNU Bison 3.0.4.  */
-
-/* Bison implementation for Yacc-like parsers in C
-
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
-
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
-
-/* As a special exception, you may create a larger work that contains
-   part or all of the Bison parser skeleton and distribute that work
-   under terms of your choice, so long as that work isn't itself a
-   parser generator using the skeleton or a modified version thereof
-   as a parser skeleton.  Alternatively, if you modify or redistribute
-   the parser skeleton itself, you may (at your option) remove this
-   special exception, which will cause the skeleton and the resulting
-   Bison output files to be licensed under the GNU General Public
-   License without this special exception.
-
-   This special exception was added by the Free Software Foundation in
-   version 2.2 of Bison.  */
-
-/* C LALR(1) parser skeleton written by Richard Stallman, by
-   simplifying the original so-called "semantic" parser.  */
-
-/* All symbols defined below should begin with yy or YY, to avoid
-   infringing on user name space.  This should be done even for local
-   variables, as they might otherwise be expanded by user macros.
-   There are some unavoidable exceptions within include files to
-   define necessary library symbols; they are noted "INFRINGES ON
-   USER NAME SPACE" below.  */
-
+﻿/*******************************************************************************
+ * A Bison parser, made by GNU Bison 3.0.4
+ * Bison interface for Yacc-like parsers in C
+ *
+ * Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * As a special exception, you may create a larger work that contains
+ * part or all of the Bison parser skeleton and distribute that work
+ * under terms of your choice, so long as that work isn't itself a
+ * parser generator using the skeleton or a modified version thereof
+ * as a parser skeleton.  Alternatively, if you modify or redistribute
+ * the parser skeleton itself, you may (at your option) remove this
+ * special exception, which will cause the skeleton and the resulting
+ * Bison output files to be licensed under the GNU General Public
+ * License without this special exception.
+ *
+ * This special exception was added by the Free Software Foundation in
+ * version 2.2 of Bison.
+ *
+ * C LALR(1) parser skeleton written by Richard Stallman, by
+ *  simplifying the original so-called "semantic" parser.
+ *
+ * All symbols defined below should begin with yy or YY, to avoid
+ *  infringing on user name space.  This should be done even for local
+ *  variables, as they might otherwise be expanded by user macros.
+ *  There are some unavoidable exceptions within include files to
+ *  define necessary library symbols; they are noted "INFRINGES ON
+ *  USER NAME SPACE" below.
+ ******************************************************************************/
 #include <strings.h>
+
+#include "cssparser_i.h"
 
 /* Identify Bison output.  */
 #define YYBISON 1
@@ -63,6 +65,7 @@
 /* Substitute the type names.  */
 #define YYSTYPE         CSSPARSERSTYPE
 #define YYLTYPE         CSSPARSERLTYPE
+
 /* Substitute the variable and function names.  */
 #define yyparse         cssparse
 #define yylex           cssprsr_lex
@@ -72,9 +75,6 @@
 
 
 /* Copy the first part of user declarations.  */
-
-#include "css_tokenizer.h"
-
 #define YYENABLE_NLS 0
 #define YYLTYPE_IS_TRIVIAL 1
 #define YYMAXDEPTH 10000
@@ -275,7 +275,7 @@ union CSSPARSERSTYPE
     CssArray* selectorList;
     // CSSSelector::MarginBoxType marginBox;
     CssSelectorRelation relation;
-    CssAttributeMatchType attributeMatchType;
+    CssAttributeMatchType attrMatchType;
     CssArray* mediaList;
     CssMediaQuery* mediaQuery;
     CssMediaQueryRestrictor mediaQueryRestrictor;
@@ -1901,14 +1901,11 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocatio
 }
 
 
-
-
 /*----------.
 | yyparse.  |
 `----------*/
 
-int
-yyparse (void* scanner, struct CssInternalParser * parser)
+int yyparse (void* scanner, struct CssInternalParser * parser)
 {
 /* The lookahead symbol.  */
 int yychar;
@@ -2443,7 +2440,7 @@ yyreduce:
   case 77:
 
     {
-        (yyval.mediaQueryRestrictor) = CssMediaQueryRestrictorNone;
+        (yyval.mediaQueryRestrictor) = CssMediaQueryResNone;
     }
 
     break;
@@ -2451,7 +2448,7 @@ yyreduce:
   case 78:
 
     {
-        (yyval.mediaQueryRestrictor) = CssMediaQueryRestrictorOnly;
+        (yyval.mediaQueryRestrictor) = CssMediaQueryResOnly;
     }
 
     break;
@@ -2459,7 +2456,7 @@ yyreduce:
   case 79:
 
     {
-        (yyval.mediaQueryRestrictor) = CssMediaQueryRestrictorNot;
+        (yyval.mediaQueryRestrictor) = CssMediaQueryResNot;
     }
 
     break;
@@ -2467,7 +2464,7 @@ yyreduce:
   case 80:
 
     {
-        (yyval.mediaQuery) = cssprsr_new_media_query(parser, CssMediaQueryRestrictorNone, NULL, (yyvsp[-1].mediaQueryExpList));
+        (yyval.mediaQuery) = cssprsr_new_media_query(parser, CssMediaQueryResNone, NULL, (yyvsp[-1].mediaQueryExpList));
     }
 
     break;
@@ -2485,7 +2482,7 @@ yyreduce:
 
     {
         cssprsr_parser_report_error(parser, (yyvsp[-1].location), "parser->lastLocationLabel(), InvalidMediaQueryCSSError");
-        (yyval.mediaQuery) = cssprsr_new_media_query(parser, CssMediaQueryRestrictorNot, NULL, NULL);
+        (yyval.mediaQuery) = cssprsr_new_media_query(parser, CssMediaQueryResNot, NULL, NULL);
     }
 
     break;
@@ -2494,7 +2491,7 @@ yyreduce:
 
     {
         cssprsr_parser_report_error(parser, (yyvsp[-1].location), "parser->lastLocationLabel(), InvalidMediaQueryCSSError");
-        (yyval.mediaQuery) = cssprsr_new_media_query(parser, CssMediaQueryRestrictorNot, NULL, NULL);
+        (yyval.mediaQuery) = cssprsr_new_media_query(parser, CssMediaQueryResNot, NULL, NULL);
     }
 
     break;
@@ -2786,7 +2783,7 @@ yyreduce:
   case 128:
 
     {
-        (yyval.value) = cssprsr_new_number_value(parser, (yyvsp[-1].integer), &(yyvsp[0].number), CSSPRSR_RVALUE_NUMBER);
+        (yyval.value) = cssprsr_new_number_value(parser, (yyvsp[-1].integer), &(yyvsp[0].number), CSS_VALUE_NUMBER);
     }
 
     break;
@@ -2798,13 +2795,13 @@ yyreduce:
             CssParserNumber number;
             number.val = 0;
             number.raw = (CssParserString){"from", 4};
-            (yyval.value) = cssprsr_new_number_value(parser, 1, &number, CSSPRSR_RVALUE_NUMBER);
+            (yyval.value) = cssprsr_new_number_value(parser, 1, &number, CSS_VALUE_NUMBER);
         }
         else if (!strcasecmp((yyvsp[0].string).data, "to")) {
             CssParserNumber number;
             number.val = 100;
             number.raw = (CssParserString){"to", 4};
-            (yyval.value) = cssprsr_new_number_value(parser, 1, &number, CSSPRSR_RVALUE_NUMBER);
+            (yyval.value) = cssprsr_new_number_value(parser, 1, &number, CSS_VALUE_NUMBER);
         }
         else {
             YYERROR;
@@ -2842,19 +2839,19 @@ yyreduce:
 
   case 133:
 
-    { (yyval.relation) = CssSelectorRelationDirectAdjacent; }
+    { (yyval.relation) = CssSelRelDirectAdjacent; }
 
     break;
 
   case 134:
 
-    { (yyval.relation) = CssSelectorRelationIndirectAdjacent; }
+    { (yyval.relation) = CssSelRelIndirectAdjacent; }
 
     break;
 
   case 135:
 
-    { (yyval.relation) = CssSelectorRelationChild; }
+    { (yyval.relation) = CssSelRelChild; }
 
     break;
 
@@ -2862,7 +2859,7 @@ yyreduce:
 
     {
         if (!strcasecmp((yyvsp[-2].string).data, "deep"))
-            (yyval.relation) = CssSelectorRelationShadowDeep;
+            (yyval.relation) = CssSelRelShadowDeep;
         else
             YYERROR;
     }
@@ -2963,7 +2960,7 @@ yyreduce:
         if ( NULL != end ) {
             while (NULL != end->tagHistory)
                 end = end->tagHistory;
-            end->relation = CssSelectorRelationDescendant;
+            end->relation = CssSelRelDescendant;
             // if ($1->isContentPseudoElement())
             //     end->setRelationIsAffectedByPseudoContent();
             end->tagHistory = cssprsr_sink_floating_selector(parser, (yyvsp[-2].selector));
@@ -3009,7 +3006,7 @@ yyreduce:
 
     {
         (yyval.selector) = cssprsr_new_selector(parser);
-        (yyval.selector)->match = CssSelectorMatchTag;
+        (yyval.selector)->match = CssSelMatchTag;
         (yyval.selector)->tag = cssprsr_new_qualified_name(parser, NULL, &(yyvsp[0].string), &parser->default_namespace);
     }
 
@@ -3039,7 +3036,7 @@ yyreduce:
 
     {
         (yyval.selector) = cssprsr_new_selector(parser);
-        (yyval.selector)->match = CssSelectorMatchTag;
+        (yyval.selector)->match = CssSelMatchTag;
         (yyval.selector)->tag = cssprsr_new_qualified_name(parser, &(yyvsp[-1].string), &(yyvsp[0].string), &(yyvsp[-1].string));
         // $$ = parser->createFloatingSelectorWithTagName(parser->determineNameInNamespace($1, $2));
         // if (!$$)
@@ -3099,7 +3096,7 @@ yyreduce:
 
     {
         (yyval.selector) = cssprsr_new_selector(parser);
-        (yyval.selector)->match =CssSelectorMatchId;
+        (yyval.selector)->match =CssSelMatchId;
         // if (isQuirksModeBehavior(parser->m_context.mode()))
             // parser->tokenToLowerCase($1);
         cssprsr_selector_set_value(parser, (yyval.selector), &(yyvsp[0].string));
@@ -3114,7 +3111,7 @@ yyreduce:
             YYERROR;
         } else {
             (yyval.selector) = cssprsr_new_selector(parser);
-            (yyval.selector)->match =CssSelectorMatchId;
+            (yyval.selector)->match =CssSelMatchId;
             // if (isQuirksModeBehavior(parser->m_context.mode()))
                 // parser->tokenToLowerCase($1);
             cssprsr_selector_set_value(parser, (yyval.selector), &(yyvsp[0].string));
@@ -3127,7 +3124,7 @@ yyreduce:
 
     {
         (yyval.selector) = cssprsr_new_selector(parser);
-        (yyval.selector)->match = CssSelectorMatchClass;
+        (yyval.selector)->match = CssSelMatchClass;
         // if (isQuirksModeBehavior(parser->m_context.mode()))
         //     parser->tokenToLowerCase($2);
         cssprsr_selector_set_value(parser, (yyval.selector), &(yyvsp[0].string));
@@ -3148,17 +3145,17 @@ yyreduce:
   case 173:
 
     {
-        CssAttributeMatchType attrMatchType = CssAttributeMatchTypeCaseSensitive;
+        CssAttributeMatchType attrMatchType = CssAMTCaseSensitive;
         if (!cssprsr_parse_attribute_match_type(parser, attrMatchType, &(yyvsp[-1].string)))
             YYERROR;
-        (yyval.attributeMatchType) = attrMatchType;
+        (yyval.attrMatchType) = attrMatchType;
     }
 
     break;
 
   case 175:
 
-    { (yyval.attributeMatchType) = CssAttributeMatchTypeCaseSensitive; }
+    { (yyval.attrMatchType) = CssAMTCaseSensitive; }
 
     break;
 
@@ -3167,8 +3164,8 @@ yyreduce:
     {
         (yyval.selector) = cssprsr_new_selector(parser);
         (yyval.selector)->data->attribute = cssprsr_new_qualified_name(parser, NULL, &(yyvsp[-1].string), NULL);
-        (yyval.selector)->data->bits.attributeMatchType = CssAttributeMatchTypeCaseSensitive;
-        (yyval.selector)->match = CssSelectorMatchAttributeSet;
+        (yyval.selector)->data->bits.attrMatchType = CssAMTCaseSensitive;
+        (yyval.selector)->match = CssSelMatchAttrSet;
     }
 
     break;
@@ -3178,7 +3175,7 @@ yyreduce:
     {
         (yyval.selector) = cssprsr_new_selector(parser);
         (yyval.selector)->data->attribute = cssprsr_new_qualified_name(parser, NULL, &(yyvsp[-6].string), NULL);
-        (yyval.selector)->data->bits.attributeMatchType = (yyvsp[-1].attributeMatchType);
+        (yyval.selector)->data->bits.attrMatchType = (yyvsp[-1].attrMatchType);
         (yyval.selector)->match = (yyvsp[-5].integer);
         cssprsr_selector_set_value(parser, (yyval.selector), &(yyvsp[-3].string));
     }
@@ -3217,7 +3214,7 @@ yyreduce:
   case 181:
 
     {
-        (yyval.integer) = CssSelectorMatchAttributeExact;
+        (yyval.integer) = CssSelMatchAttrExact;
     }
 
     break;
@@ -3225,7 +3222,7 @@ yyreduce:
   case 182:
 
     {
-        (yyval.integer) = CssSelectorMatchAttributeList;
+        (yyval.integer) = CssSelMatchAttrList;
     }
 
     break;
@@ -3233,7 +3230,7 @@ yyreduce:
   case 183:
 
     {
-        (yyval.integer) = CssSelectorMatchAttributeHyphen;
+        (yyval.integer) = CssSelMatchAttrHyphen;
     }
 
     break;
@@ -3241,7 +3238,7 @@ yyreduce:
   case 184:
 
     {
-        (yyval.integer) = CssSelectorMatchAttributeBegin;
+        (yyval.integer) = CssSelMatchAttrBegin;
     }
 
     break;
@@ -3249,7 +3246,7 @@ yyreduce:
   case 185:
 
     {
-        (yyval.integer) = CssSelectorMatchAttributeEnd;
+        (yyval.integer) = CssSelMatchAttrEnd;
     }
 
     break;
@@ -3257,7 +3254,7 @@ yyreduce:
   case 186:
 
     {
-        (yyval.integer) = CssSelectorMatchAttributeContain;
+        (yyval.integer) = CssSelMatchAttrContain;
     }
 
     break;
@@ -3268,7 +3265,7 @@ yyreduce:
         if (cssprsr_string_is_function(&(yyvsp[0].string)))
             YYERROR;
         (yyval.selector) = cssprsr_new_selector(parser);
-        (yyval.selector)->match = CssSelectorMatchPseudoClass;
+        (yyval.selector)->match = CssSelMatchPseudoClass;
         cssprsr_string_to_lowercase(parser, &(yyvsp[0].string));
         cssprsr_selector_set_value(parser, (yyval.selector), &(yyvsp[0].string));
         cssprsr_selector_extract_pseudo_type((yyval.selector));
@@ -3285,7 +3282,7 @@ yyreduce:
         if (cssprsr_string_is_function(&(yyvsp[0].string)))
             YYERROR;
         (yyval.selector) = cssprsr_new_selector(parser);
-        (yyval.selector)->match = CssSelectorMatchPseudoElement;
+        (yyval.selector)->match = CssSelMatchPseudoElement;
         cssprsr_string_to_lowercase(parser, &(yyvsp[0].string));
         cssprsr_selector_set_value(parser, (yyval.selector), &(yyvsp[0].string));
         cssprsr_selector_extract_pseudo_type((yyval.selector));
@@ -3310,7 +3307,7 @@ yyreduce:
 
     {
         (yyval.selector) = cssprsr_new_selector(parser);
-        (yyval.selector)->match = CssSelectorMatchPseudoClass;
+        (yyval.selector)->match = CssSelMatchPseudoClass;
         cssprsr_selector_set_argument(parser, (yyval.selector), &(yyvsp[-2].string));
         cssprsr_selector_set_value(parser, (yyval.selector), &(yyvsp[-4].string));
         cssprsr_selector_extract_pseudo_type((yyval.selector));
@@ -3325,7 +3322,7 @@ yyreduce:
 
     {
         (yyval.selector) = cssprsr_new_selector(parser);
-        (yyval.selector)->match = CssSelectorMatchPseudoClass;
+        (yyval.selector)->match = CssSelMatchPseudoClass;
         cssprsr_selector_set_argument_with_number(parser, (yyval.selector), (yyvsp[-3].integer), &(yyvsp[-2].number));
         cssprsr_selector_set_value(parser, (yyval.selector), &(yyvsp[-5].string));
         cssprsr_selector_extract_pseudo_type((yyval.selector));
@@ -3344,7 +3341,7 @@ yyreduce:
 
     {
         (yyval.selector) = cssprsr_new_selector(parser);
-        (yyval.selector)->match = CssSelectorMatchPseudoClass;
+        (yyval.selector)->match = CssSelMatchPseudoClass;
         cssprsr_selector_set_argument(parser, (yyval.selector), &(yyvsp[-2].string));
         
         cssprsr_string_to_lowercase(parser, &(yyvsp[-4].string));
@@ -3379,7 +3376,7 @@ yyreduce:
             YYERROR;
         else {
             (yyval.selector) = cssprsr_new_selector(parser);
-            (yyval.selector)->match = CssSelectorMatchPseudoClass;
+            (yyval.selector)->match = CssSelMatchPseudoClass;
             (yyval.selector)->pseudo = CssPseudoNot;
 
             CssArray* array = cssprsr_new_array(parser);
@@ -3647,7 +3644,7 @@ yyreduce:
 
   case 229:
 
-    { (yyval.value) = cssprsr_new_value(parser); (yyval.value)->id = CssValueInvalid; (yyval.value)->isInt = false; cssprsr_value_set_string(parser, (yyval.value), &(yyvsp[-1].string)); (yyval.value)->unit = CSSPRSR_RVALUE_STRING; }
+    { (yyval.value) = cssprsr_new_value(parser); (yyval.value)->id = CssValueInvalid; (yyval.value)->isInt = false; cssprsr_value_set_string(parser, (yyval.value), &(yyvsp[-1].string)); (yyval.value)->unit = CSS_VALUE_STRING; }
 
     break;
 
@@ -3659,31 +3656,31 @@ yyreduce:
 
   case 231:
 
-    { (yyval.value) = cssprsr_new_value(parser); (yyval.value)->id = CssValueInvalid; cssprsr_value_set_string(parser, (yyval.value), &(yyvsp[-1].string)); (yyval.value)->isInt = false; (yyval.value)->unit = CSSPRSR_RVALUE_DIMENSION; }
+    { (yyval.value) = cssprsr_new_value(parser); (yyval.value)->id = CssValueInvalid; cssprsr_value_set_string(parser, (yyval.value), &(yyvsp[-1].string)); (yyval.value)->isInt = false; (yyval.value)->unit = CSS_VALUE_DIMENSION; }
 
     break;
 
   case 232:
 
-    { (yyval.value) = cssprsr_new_value(parser); (yyval.value)->id = CssValueInvalid; cssprsr_value_set_string(parser, (yyval.value), &(yyvsp[-1].string)); (yyval.value)->isInt = false; (yyval.value)->unit = CSSPRSR_RVALUE_DIMENSION; }
+    { (yyval.value) = cssprsr_new_value(parser); (yyval.value)->id = CssValueInvalid; cssprsr_value_set_string(parser, (yyval.value), &(yyvsp[-1].string)); (yyval.value)->isInt = false; (yyval.value)->unit = CSS_VALUE_DIMENSION; }
 
     break;
 
   case 233:
 
-    { (yyval.value) = cssprsr_new_value(parser); (yyval.value)->id = CssValueInvalid; cssprsr_value_set_string(parser, (yyval.value), &(yyvsp[-1].string)); (yyval.value)->isInt = false; (yyval.value)->unit = CSSPRSR_RVALUE_URI; }
+    { (yyval.value) = cssprsr_new_value(parser); (yyval.value)->id = CssValueInvalid; cssprsr_value_set_string(parser, (yyval.value), &(yyvsp[-1].string)); (yyval.value)->isInt = false; (yyval.value)->unit = CSS_VALUE_URI; }
 
     break;
 
   case 234:
 
-    { (yyval.value) = cssprsr_new_value(parser); (yyval.value)->id = CssValueInvalid; cssprsr_value_set_string(parser, (yyval.value), &(yyvsp[-1].string)); (yyval.value)->isInt = false; (yyval.value)->unit = CSSPRSR_RVALUE_UNICODE_RANGE; }
+    { (yyval.value) = cssprsr_new_value(parser); (yyval.value)->id = CssValueInvalid; cssprsr_value_set_string(parser, (yyval.value), &(yyvsp[-1].string)); (yyval.value)->isInt = false; (yyval.value)->unit = CSS_VALUE_UNICODE_RANGE; }
 
     break;
 
   case 235:
 
-    { (yyval.value) = cssprsr_new_value(parser); (yyval.value)->id = CssValueInvalid; cssprsr_value_set_string(parser, (yyval.value), &(yyvsp[-1].string)); (yyval.value)->isInt = false; (yyval.value)->unit = CSSPRSR_RVALUE_PARSER_HEXCOLOR; }
+    { (yyval.value) = cssprsr_new_value(parser); (yyval.value)->id = CssValueInvalid; cssprsr_value_set_string(parser, (yyval.value), &(yyvsp[-1].string)); (yyval.value)->isInt = false; (yyval.value)->unit = CSS_VALUE_PARSER_HEXCOLOR; }
 
     break;
 
@@ -3693,7 +3690,7 @@ yyreduce:
     //(yyval.value)->string = "#"; 
     CssParserString tmp = {"#", 1};
     cssprsr_value_set_string(parser, yyval.value, &tmp); 
-    (yyval.value)->isInt = false; (yyval.value)->unit = CSSPRSR_RVALUE_PARSER_HEXCOLOR; }
+    (yyval.value)->isInt = false; (yyval.value)->unit = CSS_VALUE_PARSER_HEXCOLOR; }
 
     break;
 
@@ -3705,181 +3702,181 @@ yyreduce:
 
   case 241:
 
-    { (yyval.value) = cssprsr_new_number_value(parser, 1, &(yyvsp[0].number), CSSPRSR_RVALUE_NUMBER); (yyval.value)->isInt = true; }
+    { (yyval.value) = cssprsr_new_number_value(parser, 1, &(yyvsp[0].number), CSS_VALUE_NUMBER); (yyval.value)->isInt = true; }
 
     break;
 
   case 242:
 
-    { (yyval.value) = cssprsr_new_number_value(parser, 1, &(yyvsp[0].number), CSSPRSR_RVALUE_NUMBER); }
+    { (yyval.value) = cssprsr_new_number_value(parser, 1, &(yyvsp[0].number), CSS_VALUE_NUMBER); }
 
     break;
 
   case 243:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_PERCENTAGE); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_PERCENTAGE); }
 
     break;
 
   case 244:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_PX); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_PX); }
 
     break;
 
   case 245:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_CM); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_CM); }
 
     break;
 
   case 246:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_MM); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_MM); }
 
     break;
 
   case 247:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_IN); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_IN); }
 
     break;
 
   case 248:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_PT); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_PT); }
 
     break;
 
   case 249:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_PC); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_PC); }
 
     break;
 
   case 250:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_DEG); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_DEG); }
 
     break;
 
   case 251:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_RAD); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_RAD); }
 
     break;
 
   case 252:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_GRAD); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_GRAD); }
 
     break;
 
   case 253:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_TURN); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_TURN); }
 
     break;
 
   case 254:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_MS); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_MS); }
 
     break;
 
   case 255:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_S); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_S); }
 
     break;
 
   case 256:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_HZ); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_HZ); }
 
     break;
 
   case 257:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_KHZ); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_KHZ); }
 
     break;
 
   case 258:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_EMS); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_EMS); }
 
     break;
 
   case 259:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_PARSER_Q_EMS); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_PARSER_Q_EMS); }
 
     break;
 
   case 260:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_EXS); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_EXS); }
 
     break;
 
   case 261:
 
-    {  (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_REMS); /* if (parser->m_styleSheet) parser->m_styleSheet->parserSetUsesRemUnits(true); */ }
+    {  (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_REMS); /* if (parser->m_styleSheet) parser->m_styleSheet->parserSetUsesRemUnits(true); */ }
 
     break;
 
   case 262:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_CHS); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_CHS); }
 
     break;
 
   case 263:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_VW); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_VW); }
 
     break;
 
   case 264:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_VH); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_VH); }
 
     break;
 
   case 265:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_VMIN); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_VMIN); }
 
     break;
 
   case 266:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_VMAX); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_VMAX); }
 
     break;
 
   case 267:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_DPPX); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_DPPX); }
 
     break;
 
   case 268:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_DPI); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_DPI); }
 
     break;
 
   case 269:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_DPCM); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_DPCM); }
 
     break;
 
   case 270:
 
-    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSSPRSR_RVALUE_FR); }
+    { (yyval.value) = cssprsr_new_dimension_value(parser, &(yyvsp[0].number), CSS_VALUE_FR); }
 
     break;
 

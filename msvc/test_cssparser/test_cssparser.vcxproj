@@ -26,6 +26,9 @@
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4996</DisableSpecificWarnings>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="test.css" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{436BA4E9-41B5-4EDB-9508-FCCB4AB72091}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

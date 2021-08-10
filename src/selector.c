@@ -1,4 +1,4 @@
-/**
+/*******************************************************************************
  * Copyright (c) 2015 QFish <im@qfi.sh>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,11 +18,9 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- */
-
+ ******************************************************************************/
 #include "selector.h"
-#include <string.h>
-#include <assert.h>
+
 #include <strings.h>
 
 #undef	assert
@@ -42,13 +40,13 @@ bool cssprsr_selector_crosses_tree_scopes(const CssSelector* selector)
 
 // bool cssprsr_is_attribute_selector(const CssSelector* selector)
 // {
-//     return selector->match == CssSelectorMatchAttributeExact
-//     || selector->match == CssSelectorMatchAttributeSet
-//     || selector->match == CssSelectorMatchAttributeList
-//     || selector->match == CssSelectorMatchAttributeHyphen
-//     || selector->match == CssSelectorMatchAttributeContain
-//     || selector->match == CssSelectorMatchAttributeBegin
-//     || selector->match == CssSelectorMatchAttributeEnd;
+//     return selector->match == CssSelMatchAttrExact
+//     || selector->match == CssSelMatchAttrSet
+//     || selector->match == CssSelMatchAttrList
+//     || selector->match == CssSelMatchAttrHyphen
+//     || selector->match == CssSelMatchAttrContain
+//     || selector->match == CssSelMatchAttrBegin
+//     || selector->match == CssSelMatchAttrEnd;
 // }
 
 CssPseudoType cssprsr_parse_pseudo_type(const char* name, bool hasArguments)
@@ -68,7 +66,7 @@ void cssprsr_selector_extract_pseudo_type(CssSelector* selector)
     if (selector->pseudo == CssPseudoNotParsed)
         selector->pseudo = CssPseudoUnknown;
     
-    if (selector->match != CssSelectorMatchPseudoClass && selector->match != CssSelectorMatchPseudoElement && selector->match != CssSelectorMatchPagePseudoClass)
+    if (selector->match != CssSelMatchPseudoClass && selector->match != CssSelMatchPseudoElement && selector->match != CssSelMatchPagePseudoClass)
         return;
     bool hasArguments = (NULL != selector->data->argument) || (NULL != selector->data->selectors);    
     selector->pseudo = cssprsr_parse_pseudo_type(selector->data->value, hasArguments);
@@ -158,7 +156,7 @@ void cssprsr_selector_extract_pseudo_type(CssSelector* selector)
         case CssPseudoHost:
         case CssPseudoHostContext:
         case CssPseudoUnresolved:
-        case CssPseudoSpatialNavigationFocus:
+        case CssPseudoSpatialNavFocus:
         case CssPseudoListBox:
             break;
         case CssPseudoFirstPage:
@@ -168,15 +166,15 @@ void cssprsr_selector_extract_pseudo_type(CssSelector* selector)
             break;
     }
     
-    bool matchPagePseudoClass = (selector->match == CssSelectorMatchPagePseudoClass);
+    bool matchPagePseudoClass = (selector->match == CssSelMatchPagePseudoClass);
     if (matchPagePseudoClass != isPagePseudoClass)
         selector->pseudo = CssPseudoUnknown;
-    else if (selector->match == CssSelectorMatchPseudoClass && element) {
+    else if (selector->match == CssSelMatchPseudoClass && element) {
         if (!compat)
             selector->pseudo = CssPseudoUnknown;
         else
-            selector->match = CssSelectorMatchPseudoElement;
-    } else if (selector->match == CssSelectorMatchPseudoElement && !element)
+            selector->match = CssSelMatchPseudoElement;
+    } else if (selector->match == CssSelMatchPseudoElement && !element)
         selector->pseudo = CssPseudoUnknown;
 }
 
@@ -184,27 +182,27 @@ bool cssprsr_selector_matches_pseudo_element(CssSelector* selector)
 {
     if (selector->pseudo == CssPseudoUnknown)
         cssprsr_selector_extract_pseudo_type(selector);
-    return selector->match == CssSelectorMatchPseudoElement;
+    return selector->match == CssSelMatchPseudoElement;
 }
 
 bool cssprsr_selector_is_custom_pseudo_element(CssSelector* selector)
 {
-    return selector->match == CssSelectorMatchPseudoElement && selector->pseudo == CssPseudoWebKitCustomElement;
+    return selector->match == CssSelMatchPseudoElement && selector->pseudo == CssPseudoWebKitCustomElement;
 }
 
 bool cssprsr_selector_is_direct_adjacent(CssSelector* selector)
 {
-    return selector->relation == CssSelectorRelationDirectAdjacent || selector->relation == CssSelectorRelationIndirectAdjacent;
+    return selector->relation == CssSelRelDirectAdjacent || selector->relation == CssSelRelIndirectAdjacent;
 }
 
 bool cssprsr_selector_is_adjacent(CssSelector* selector)
 {
-    return selector->relation == CssSelectorRelationDirectAdjacent;
+    return selector->relation == CssSelRelDirectAdjacent;
 }
 
 bool cssprsr_selector_is_shadow(CssSelector* selector)
 {
-    return selector->relation == CssSelectorRelationShadowPseudo || selector->relation == CssSelectorRelationShadowDeep;
+    return selector->relation == CssSelRelShadowPseudo || selector->relation == CssSelRelShadowDeep;
 }
 
 bool cssprsr_selector_is_sibling(CssSelector* selector)
@@ -212,8 +210,8 @@ bool cssprsr_selector_is_sibling(CssSelector* selector)
     cssprsr_selector_extract_pseudo_type(selector);
 
     CssPseudoType type = selector->pseudo;
-    return selector->relation == CssSelectorRelationDirectAdjacent
-        || selector->relation == CssSelectorRelationIndirectAdjacent
+    return selector->relation == CssSelRelDirectAdjacent
+        || selector->relation == CssSelRelIndirectAdjacent
         || type == CssPseudoEmpty
         || type == CssPseudoFirstChild
         || type == CssPseudoFirstOfType
@@ -229,37 +227,37 @@ bool cssprsr_selector_is_sibling(CssSelector* selector)
 
 bool cssprsr_selector_is_attribute(const CssSelector* selector)
 {
-    return selector->match >= CssSelectorMatchFirstAttribute;
+    return selector->match >= CssSelMatchFirstAttr;
 }
 
 bool cssprsr_selector_is_content_pseudo_element(CssSelector* selector)
 {
     cssprsr_selector_extract_pseudo_type(selector);
-    return selector->match == CssSelectorMatchPseudoElement && selector->pseudo == CssPseudoContent;
+    return selector->match == CssSelMatchPseudoElement && selector->pseudo == CssPseudoContent;
 }
 
 bool cssprsr_selector_is_shadow_pseudo_element(CssSelector* selector)
 {
-    return selector->match == CssSelectorMatchPseudoElement
+    return selector->match == CssSelMatchPseudoElement
             && selector->pseudo == CssPseudoShadow;
 }
 
 bool cssprsr_selector_is_host_pseudo_class(CssSelector* selector)
 {
-    return selector->match == CssSelectorMatchPseudoClass && (selector->pseudo == CssPseudoHost || selector->pseudo == CssPseudoHostContext);
+    return selector->match == CssSelMatchPseudoClass && (selector->pseudo == CssPseudoHost || selector->pseudo == CssPseudoHostContext);
 }
 
 bool cssprsr_selector_is_tree_boundary_crossing(CssSelector* selector)
 {
     cssprsr_selector_extract_pseudo_type(selector);
-    return selector->match == CssSelectorMatchPseudoClass && (selector->pseudo == CssPseudoHost || selector->pseudo == CssPseudoHostContext);
+    return selector->match == CssSelMatchPseudoClass && (selector->pseudo == CssPseudoHost || selector->pseudo == CssPseudoHostContext);
 }
 
 bool cssprsr_selector_is_insertion_point_crossing(CssSelector* selector)
 {
     cssprsr_selector_extract_pseudo_type(selector);
-    return (selector->match == CssSelectorMatchPseudoClass && selector->pseudo == CssPseudoHostContext)
-        || (selector->match == CssSelectorMatchPseudoElement && selector->pseudo == CssPseudoContent);
+    return (selector->match == CssSelMatchPseudoClass && selector->pseudo == CssPseudoHostContext)
+        || (selector->match == CssSelMatchPseudoElement && selector->pseudo == CssPseudoContent);
 }
 
 CssParserString* cssprsr_build_relation_selector_string(CssParser* parser, const char* relation, CssParserString* string, CssParserString* next, CssSelector* tagHistory)
@@ -273,19 +271,19 @@ CssParserString* cssprsr_build_relation_selector_string(CssParser* parser, const
     }
     
     CssParserString * result = cssprsr_selector_to_string(parser, tagHistory, (CssParserString*)string);
-    cssprsr_parser_deallocate(parser, (void*) string->data);
-    cssprsr_parser_deallocate(parser, (void*) string);
+    cssprsr_parser_free(parser, (void*) string->data);
+    cssprsr_parser_free(parser, (void*) string);
     return result;
 }
 
 CssParserString* cssprsr_selector_to_string(CssParser* parser, CssSelector* selector, CssParserString* next)
 {
-    CssParserString* string = cssprsr_parser_allocate(parser, sizeof(CssParserString));
+    CssParserString* string = cssprsr_parser_alloc(parser, sizeof(CssParserString));
     cssprsr_string_init(parser, string);
     
     bool tag_is_implicit = true;
     
-    if (selector->match == CssSelectorMatchTag && tag_is_implicit)
+    if (selector->match == CssSelMatchTag && tag_is_implicit)
     {
         if ( NULL == selector->tag->prefix )
             cssprsr_string_append_characters(parser, selector->tag->local, string);
@@ -299,13 +297,13 @@ CssParserString* cssprsr_selector_to_string(CssParser* parser, CssSelector* sele
     const CssSelector* cs = selector;
 
     while (true) {
-        if (cs->match == CssSelectorMatchId) {
+        if (cs->match == CssSelMatchId) {
             cssprsr_string_append_characters(parser, "#", string);
             cssprsr_string_append_characters(parser, cs->data->value, string);
-        } else if (cs->match == CssSelectorMatchClass) {
+        } else if (cs->match == CssSelMatchClass) {
             cssprsr_string_append_characters(parser, ".", string);
             cssprsr_string_append_characters(parser, cs->data->value, string);
-        } else if (cs->match == CssSelectorMatchPseudoClass || cs->match == CssSelectorMatchPagePseudoClass) {
+        } else if (cs->match == CssSelMatchPseudoClass || cs->match == CssSelMatchPagePseudoClass) {
             cssprsr_string_append_characters(parser, ":", string);
             cssprsr_string_append_characters(parser, cs->data->value, string);
             
@@ -319,8 +317,8 @@ CssParserString* cssprsr_selector_to_string(CssParser* parser, CssSelector* sele
                         for (size_t i=0; i<sels->length; i++) {
                             CssParserString* str = cssprsr_selector_to_string(parser, sels->data[i], NULL);
                             cssprsr_string_append_string(parser, str, string);
-                            cssprsr_parser_deallocate(parser, (void*) str->data);
-                            cssprsr_parser_deallocate(parser, (void*) str);
+                            cssprsr_parser_free(parser, (void*) str->data);
+                            cssprsr_parser_free(parser, (void*) str);
                             if ( i != sels->length -1 ) {
                                 cssprsr_string_append_characters(parser, ", ", string);
                             }
@@ -341,7 +339,7 @@ CssParserString* cssprsr_selector_to_string(CssParser* parser, CssSelector* sele
                 default:
                     break;
             }
-        } else if (cs->match == CssSelectorMatchPseudoElement) {
+        } else if (cs->match == CssSelMatchPseudoElement) {
             cssprsr_string_append_characters(parser, "::", string);
             cssprsr_string_append_characters(parser, cs->data->value, string);
         } else if (cssprsr_selector_is_attribute(cs)) {
@@ -352,40 +350,40 @@ CssParserString* cssprsr_selector_to_string(CssParser* parser, CssSelector* sele
             }
             cssprsr_string_append_characters(parser, cs->data->attribute->local, string);
             switch (cs->match) {
-                case CssSelectorMatchAttributeExact:
+                case CssSelMatchAttrExact:
                     cssprsr_string_append_characters(parser, "=", string);
                     break;
-                case CssSelectorMatchAttributeSet:
+                case CssSelMatchAttrSet:
                     cssprsr_string_append_characters(parser, "]", string);
                     break;
-                case CssSelectorMatchAttributeList:
+                case CssSelMatchAttrList:
                     cssprsr_string_append_characters(parser, "~=", string);
                     break;
-                case CssSelectorMatchAttributeHyphen:
+                case CssSelMatchAttrHyphen:
                     cssprsr_string_append_characters(parser, "|=", string);
                     break;
-                case CssSelectorMatchAttributeBegin:
+                case CssSelMatchAttrBegin:
                     cssprsr_string_append_characters(parser, "^=", string);
                     break;
-                case CssSelectorMatchAttributeEnd:
+                case CssSelMatchAttrEnd:
                     cssprsr_string_append_characters(parser, "$=", string);
                     break;
-                case CssSelectorMatchAttributeContain:
+                case CssSelMatchAttrContain:
                     cssprsr_string_append_characters(parser, "*=", string);
                     break;
                 default:
                     break;
             }
-            if (cs->match != CssSelectorMatchAttributeSet) {
+            if (cs->match != CssSelMatchAttrSet) {
                 cssprsr_string_append_characters(parser, "\"", string);
                 cssprsr_string_append_characters(parser, cs->data->value, string);
                 cssprsr_string_append_characters(parser, "\"", string);
-                if (cs->data->bits.attributeMatchType == CssAttributeMatchTypeCaseInsensitive)
+                if (cs->data->bits.attrMatchType == CssAMTCaseInsensitive)
                     cssprsr_string_append_characters(parser, " i", string);
                 cssprsr_string_append_characters(parser, "]", string);
             }
         }
-        if (cs->relation != CssSelectorRelationSubSelector || !cs->tagHistory)
+        if (cs->relation != CssSelRelSubSelector || !cs->tagHistory)
             break;
         cs = cs->tagHistory;
     }
@@ -394,31 +392,31 @@ CssParserString* cssprsr_selector_to_string(CssParser* parser, CssSelector* sele
 
     if ( NULL != tagHistory ) {
         switch (cs->relation) {
-            case CssSelectorRelationDescendant:
+            case CssSelRelDescendant:
             {
                 return cssprsr_build_relation_selector_string(parser, " ", string, next, tagHistory);
             }
-            case CssSelectorRelationChild:
+            case CssSelRelChild:
             {
                 return cssprsr_build_relation_selector_string(parser, " > ", string, next, tagHistory);
             }
-            case CssSelectorRelationShadowDeep:
+            case CssSelRelShadowDeep:
             {
                 return cssprsr_build_relation_selector_string(parser, " /deep/ ", string, next, tagHistory);
             }
-            case CssSelectorRelationDirectAdjacent:
+            case CssSelRelDirectAdjacent:
             {
                 return cssprsr_build_relation_selector_string(parser, " + ", string, next, tagHistory);
             }
-            case CssSelectorRelationIndirectAdjacent:
+            case CssSelRelIndirectAdjacent:
             {
                 return cssprsr_build_relation_selector_string(parser, " ~ ", string, next, tagHistory);
             }
-            case CssSelectorRelationSubSelector:
+            case CssSelRelSubSelector:
             {
                 return NULL;
             }
-            case CssSelectorRelationShadowPseudo:
+            case CssSelRelShadowPseudo:
             {
                 return cssprsr_build_relation_selector_string(parser, NULL, string, next, tagHistory);
             }
@@ -435,25 +433,25 @@ CssParserString* cssprsr_selector_to_string(CssParser* parser, CssSelector* sele
 unsigned calc_specificity_for_one_selector(const CssSelector* selector)
 {
     switch ( selector->match ) {
-        case CssSelectorMatchId:
+        case CssSelMatchId:
             return 0x10000;
             
-        case CssSelectorMatchPseudoClass:
-        case CssSelectorMatchAttributeExact:
-        case CssSelectorMatchClass:
-        case CssSelectorMatchAttributeSet:
-        case CssSelectorMatchAttributeList:
-        case CssSelectorMatchAttributeHyphen:
-        case CssSelectorMatchPseudoElement:
-        case CssSelectorMatchAttributeContain:
-        case CssSelectorMatchAttributeBegin:
-        case CssSelectorMatchAttributeEnd:
+        case CssSelMatchPseudoClass:
+        case CssSelMatchAttrExact:
+        case CssSelMatchClass:
+        case CssSelMatchAttrSet:
+        case CssSelMatchAttrList:
+        case CssSelMatchAttrHyphen:
+        case CssSelMatchPseudoElement:
+        case CssSelMatchAttrContain:
+        case CssSelMatchAttrBegin:
+        case CssSelMatchAttrEnd:
             return 0x100;
             
-        case CssSelectorMatchTag:
+        case CssSelMatchTag:
             return !strcasecmp(selector->tag->local, "*") ? 0 : 1;
-        case CssSelectorMatchUnknown:
-        case CssSelectorMatchPagePseudoClass:
+        case CssSelMatchUnknown:
+        case CssSelMatchPagePseudoClass:
             return 0;
     }
     
@@ -503,7 +501,7 @@ const static CssNameToPseudoStruct kPseudoTypeWithoutArgumentsMap[] = {
     {"-internal-list-box",            CssPseudoListBox},
     {"-internal-media-controls-cast-button", CssPseudoWebKitCustomElement},
     {"-internal-media-controls-overlay-cast-button", CssPseudoWebKitCustomElement},
-    {"-internal-spatial-navigation-focus", CssPseudoSpatialNavigationFocus},
+    {"-internal-spatial-navigation-focus", CssPseudoSpatialNavFocus},
     {"-webkit-any-link",              CssPseudoAnyLink},
     {"-webkit-autofill",              CssPseudoAutofill},
     {"-webkit-drag",                  CssPseudoDrag},

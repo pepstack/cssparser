@@ -1,13 +1,32 @@
+/*******************************************************************************
+ * Copyright (c) 2015 QFish <im@qfi.sh>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ ******************************************************************************/
+#ifndef _CSSPARSER__LEX_H_
+#define _CSSPARSER__LEX_H_
+
 #include "cssparser_tab.h"
 
 /* Substitute the type names.  */
 #define YYSTYPE         CSSPARSERSTYPE
 #define YYLTYPE         CSSPARSERLTYPE
-
-#ifndef _CSSPARSER__LEX_H_
-#define _CSSPARSER__LEX_H_ 1
-
-#define CSSPARSER_IN_HEAFER 1
 
 #define  YY_INT_ALIGNED short int
 
@@ -21,23 +40,11 @@
 #define FLEX_BETA
 #endif
 
-/* First, we deal with  platform-specific or compiler-specific issues. */
-
-/* begin standard C headers. */
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
-#include <stdlib.h>
-
-/* end standard C headers. */
-
 /* flex integer type definitions */
-
 #ifndef FLEXINT_H
 #define FLEXINT_H
 
 /* C99 systems have <inttypes.h>. Non-C99 systems may or may not. */
-
 #if defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
 
 /* C99 says to define __STDC_LIMIT_MACROS before including stdint.h,
@@ -151,7 +158,7 @@ typedef size_t yy_size_t;
 #ifndef YY_STRUCT_YY_BUFFER_STATE
 #define YY_STRUCT_YY_BUFFER_STATE
 struct yy_buffer_state
-	{
+{
 	FILE *yy_input_file;
 
 	char *yy_ch_buf;		/* input buffer */
@@ -195,8 +202,7 @@ struct yy_buffer_state
 	int yy_fill_buffer;
 
 	int yy_buffer_status;
-
-	};
+};
 #endif /* !YY_STRUCT_YY_BUFFER_STATE */
 
 void cssprsr_restart (FILE *input_file ,yyscan_t yyscanner );
@@ -327,27 +333,21 @@ static int yy_flex_strlen (yyconst char * ,yyscan_t yyscanner);
 #ifndef YY_DECL
 #define YY_DECL_IS_OURS 1
 
-extern int cssprsr_lex \
-    (YYSTYPE* yylval_param, YYLTYPE* yylloc, yyscan_t yyscanner, void* parser);
+extern int cssprsr_lex(YYSTYPE* yylval_param, YYLTYPE* yylloc, yyscan_t yyscanner, void* parser);
 
-#define YY_DECL int cssprsr_lex \
-    (YYSTYPE * yylval_param, YYLTYPE* yylloc, yyscan_t yyscanner, void* parser)
+#define YY_DECL int cssprsr_lex(YYSTYPE * yylval_param, YYLTYPE* yylloc, yyscan_t yyscanner, void* parser)
 
 #endif /* !YY_DECL */
 
 /* yy_get_previous_state - get the state just before the EOB char was reached */
-
-//#undef YY_NEW_FILE
 #undef YY_FLUSH_BUFFER
 #undef yy_set_bol
 #undef yy_new_buffer
 #undef yy_set_interactive
-//#undef YY_DO_BEFORE_ACTION
 
 #ifdef YY_DECL_IS_OURS
 #undef YY_DECL_IS_OURS
 #undef YY_DECL
 #endif
 
-#undef CSSPARSER_IN_HEAFER
 #endif /* _CSSPARSER__LEX_H_ */

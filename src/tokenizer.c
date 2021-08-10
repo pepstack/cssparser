@@ -1,4 +1,4 @@
-﻿/**
+﻿/*******************************************************************************
  * Copyright (c) 2015 QFish <im@qfi.sh>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,7 +18,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- */
+ ******************************************************************************/
 #include "cssparser_i.h"
 
 #undef	assert
@@ -43,7 +43,7 @@ static char * cssprsr_token_string(int tok);
  *
  *  @return the type of token
  */
-int css_tokenize(CSSPARSERSTYPE* lval , CSSPARSERLTYPE* loc, yyscan_t scanner, CssParser* parser, int tok)
+int cssprsr_tokenize(CSSPARSERSTYPE* lval , CSSPARSERLTYPE* loc, yyscan_t scanner, CssParser* parser, int tok)
 {
     char* origin_text = cssprsr_get_text(scanner);
     

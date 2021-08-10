@@ -1,37 +1,60 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
-
-/* Bison interface for Yacc-like parsers in C
-
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
-
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
-
-/* As a special exception, you may create a larger work that contains
-   part or all of the Bison parser skeleton and distribute that work
-   under terms of your choice, so long as that work isn't itself a
-   parser generator using the skeleton or a modified version thereof
-   as a parser skeleton.  Alternatively, if you modify or redistribute
-   the parser skeleton itself, you may (at your option) remove this
-   special exception, which will cause the skeleton and the resulting
-   Bison output files to be licensed under the GNU General Public
-   License without this special exception.
-
-   This special exception was added by the Free Software Foundation in
-   version 2.2 of Bison.  */
-
+/*******************************************************************************
+ * A Bison parser, made by GNU Bison 3.0.4
+ * Bison interface for Yacc-like parsers in C
+ *
+ * Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * As a special exception, you may create a larger work that contains
+ * part or all of the Bison parser skeleton and distribute that work
+ * under terms of your choice, so long as that work isn't itself a
+ * parser generator using the skeleton or a modified version thereof
+ * as a parser skeleton.  Alternatively, if you modify or redistribute
+ * the parser skeleton itself, you may (at your option) remove this
+ * special exception, which will cause the skeleton and the resulting
+ * Bison output files to be licensed under the GNU General Public
+ * License without this special exception.
+ *
+ * This special exception was added by the Free Software Foundation in
+ * version 2.2 of Bison.
+ *
+ *  Copyright (C) 2002-2003 Lars Knoll (knoll@kde.org)
+ *  Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 Apple Inc. All rights reserved.
+ *  Copyright (C) 2006 Alexey Proskuryakov (ap@nypop.com)
+ *  Copyright (C) 2008 Eric Seidel <eric@webkit.org>
+ *  Copyright (C) 2012 Intel Corporation. All rights reserved.
+ *  Copyright (C) 2015 QFish (im@qfi.sh)
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *******************************************************************************/
 #ifndef _CSSPARSER__TAB_H_
 #define _CSSPARSER__TAB_H_
+
+#include "foundation.h"
 
 /* Debug traces.  */
 #ifndef CSSPARSERDEBUG
@@ -49,36 +72,6 @@
 extern int cssprsr_debug;
 #endif
 /* "%code requires" blocks.  */
-
-
-/*
-*  Copyright (C) 2002-2003 Lars Knoll (knoll@kde.org)
-*  Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 Apple Inc. All rights reserved.
-*  Copyright (C) 2006 Alexey Proskuryakov (ap@nypop.com)
-*  Copyright (C) 2008 Eric Seidel <eric@webkit.org>
-*  Copyright (C) 2012 Intel Corporation. All rights reserved.
-*  Copyright (C) 2015 QFish (im@qfi.sh)
-*
-*  This library is free software; you can redistribute it and/or
-*  modify it under the terms of the GNU Lesser General Public
-*  License as published by the Free Software Foundation; either
-*  version 2 of the License, or (at your option) any later version.
-*
-*  This library is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-*  Lesser General Public License for more details.
-*
-*  You should have received a copy of the GNU Lesser General Public
-*  License along with this library; if not, write to the Free Software
-*  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-*
-*/
-
-#include "foundation.h"
-#include "cssparser.h"
-
-
 
 /* Token type.  */
 #ifndef CSSPARSERTOKENTYPE
@@ -183,18 +176,19 @@ union CSSPARSERSTYPE
     CssParserString string;
 
     CssRule* rule;
-    // The content of the three below HeapVectors are guaranteed to be kept alive by
-    // the corresponding parsedRules, floatingMediaQueryExpList, and parsedKeyFrames
-    // lists
+
+    // The content of the three below HeapVectors are guaranteed to be kept
+    //  alive by the corresponding parsedRules, floatingMediaQueryExpList,
+    //  and parsedKeyFrames lists.
     CssArray* ruleList;
     CssArray* mediaQueryExpList;
     CssArray* keyframeRuleList;
 
     CssSelector* selector;
     CssArray* selectorList;
-    // CSSSelector::MarginBoxType marginBox;
+
     CssSelectorRelation relation;
-    CssAttributeMatchType attributeMatchType;
+    CssAttributeMatchType attrMatchType;
     CssArray* mediaList;
     CssMediaQuery* mediaQuery;
     CssMediaQueryRestrictor mediaQueryRestrictor;
@@ -215,17 +209,15 @@ typedef union CSSPARSERSTYPE CSSPARSERSTYPE;
 typedef struct CSSPARSERLTYPE CSSPARSERLTYPE;
 struct CSSPARSERLTYPE
 {
-  int first_line;
-  int first_column;
-  int last_line;
-  int last_column;
+    int first_line;
+    int first_column;
+    int last_line;
+    int last_column;
 };
 # define CSSPARSERLTYPE_IS_DECLARED 1
 # define CSSPARSERLTYPE_IS_TRIVIAL 1
 #endif
 
-
-
-int cssparse (void* scanner, struct CssInternalParser * parser);
+int cssparse(void* scanner, struct CssInternalParser * parser);
 
 #endif /* !_CSSPARSER__TAB_H_  */

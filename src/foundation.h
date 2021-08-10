@@ -1,4 +1,4 @@
-/**
+/*******************************************************************************
  * Copyright (c) 2015 QFish <im@qfi.sh>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,8 +18,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- */
-
+ ******************************************************************************/
 #ifndef __CSS_FOUNDATION_H_
 #define __CSS_FOUNDATION_H_
 
@@ -86,7 +85,7 @@ typedef struct {
  *  Array 
  */
 // Initializes a new CssArray with the specified initial capacity.
-void cssprsr_array_init(struct CssInternalParser* parser, size_t initial_capacity, CssArray* array);
+void cssprsr_array_init(struct CssInternalParser* parser, size_t capacity, CssArray* array);
 
 // Frees the memory used by an CssArray.  Does not free the contained
 // pointers, but you should free the pointers if necessary.
@@ -115,11 +114,11 @@ void* cssprsr_array_remove_at(struct CssInternalParser* parser, int index, CssAr
 /**
  *  An alloc / free method wrapper
  */
-void* cssprsr_parser_allocate(struct CssInternalParser* parser, size_t size);
-void cssprsr_parser_deallocate(struct CssInternalParser* parser, void* ptr);
+void* cssprsr_parser_alloc(struct CssInternalParser* parser, size_t size);
+void cssprsr_parser_free(struct CssInternalParser* parser, void* ptr);
     
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* defined(__CSS_FOUNDATION_H_) */
+#endif /* __CSS_FOUNDATION_H_ */

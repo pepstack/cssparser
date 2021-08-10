@@ -9,9 +9,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\css_tokenizer.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\cssparser.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -34,9 +31,6 @@
       <Filter>src\win32</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\win32\unistd.h">
-      <Filter>src\win32</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\win32\util.h">
       <Filter>src\win32</Filter>
     </ClInclude>
   </ItemGroup>

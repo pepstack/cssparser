@@ -15,8 +15,7 @@ libcssparser_la_SOURCES = \
                 src/cssparser_i.h \
                 src/selector.c \
                 src/selector.h \
-                src/tokenizer.c \
-                src/tokenizer.h
+                src/tokenizer.c
 
 include_HEADERS = src/cssparser.h
 # make a dir

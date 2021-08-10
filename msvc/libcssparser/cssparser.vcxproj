@@ -23,12 +23,10 @@
     <ClInclude Include="..\..\src\cssparser_i.h" />
     <ClInclude Include="..\..\src\cssparser_lex.h" />
     <ClInclude Include="..\..\src\cssparser_tab.h" />
-    <ClInclude Include="..\..\src\css_tokenizer.h" />
     <ClInclude Include="..\..\src\foundation.h" />
     <ClInclude Include="..\..\src\selector.h" />
     <ClInclude Include="..\..\src\win32\strings.h" />
     <ClInclude Include="..\..\src\win32\unistd.h" />
-    <ClInclude Include="..\..\src\win32\util.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\cssparser.c" />

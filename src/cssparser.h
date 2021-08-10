@@ -1,4 +1,14 @@
 /**
+ * @file cssparser.h
+ * @brief libcssparser public api.
+ *
+ * @author zhang
+ * @version
+ * @date
+ * @note
+ * @since
+ * CSS Spec: http://www.w3.org/TR/css-syntax-3/
+ *
  * Copyright (c) 2015 QFish <im@qfi.sh>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,11 +29,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
-// CSS Spec: http://www.w3.org/TR/css-syntax-3/
-
-#ifndef _CSS_PARSER__API_
-#define _CSS_PARSER__API_
+#ifndef _CSS_PARSER_PULIC_API_
+#define _CSS_PARSER_PULIC_API_
 
 #include <stdio.h>
 #include <string.h>
@@ -35,6 +42,18 @@ extern "C" {
 #endif
 
 #define CSS_ERROR_MSG_SIZE 128
+
+#if defined(CSSPARSER_DLL)
+/* win32 dynamic dll */
+# ifdef CSSPARSER_EXPORTS
+#   define CSSPARSER_API __declspec(dllexport)
+# else
+#   define CSSPARSER_API __declspec(dllimport)
+# endif
+#else
+/* static lib or linux so */
+# define CSSPARSER_API  extern
+#endif
 
 
 typedef enum {
@@ -49,40 +68,44 @@ typedef enum {
     CssRuleHost,
 } CssRuleType;
 
+
 typedef enum {
-    CssMediaQueryRestrictorNone,
-    CssMediaQueryRestrictorOnly,
-    CssMediaQueryRestrictorNot,
+    CssMediaQueryResNone,
+    CssMediaQueryResOnly,
+    CssMediaQueryResNot,
 } CssMediaQueryRestrictor;
 
-typedef enum {
-    CssSelectorMatchUnknown = 0,
-    CssSelectorMatchTag,                 // Example: div
-    CssSelectorMatchId,                  // Example: #id
-    CssSelectorMatchClass,               // example: .class
-    CssSelectorMatchPseudoClass,         // Example:  :nth-child(2)
-    CssSelectorMatchPseudoElement,       // Example: ::first-line
-    CssSelectorMatchPagePseudoClass,     // ??
-    CssSelectorMatchAttributeExact,      // Example: E[foo="bar"]
-    CssSelectorMatchAttributeSet,        // Example: E[foo]
-    CssSelectorMatchAttributeList,       // Example: E[foo~="bar"]
-    CssSelectorMatchAttributeHyphen,     // Example: E[foo|="bar"]
-    CssSelectorMatchAttributeContain,    // css3: E[foo*="bar"]
-    CssSelectorMatchAttributeBegin,      // css3: E[foo^="bar"]
-    CssSelectorMatchAttributeEnd,        // css3: E[foo$="bar"]
-    CssSelectorMatchFirstAttribute = CssSelectorMatchAttributeExact,
-} CssSelectorMatch;
 
 typedef enum {
-    CssSelectorRelationSubSelector,      // "No space" combinator
-    CssSelectorRelationDescendant,       // "Space" combinator
-    CssSelectorRelationChild,            // > combinator
-    CssSelectorRelationDirectAdjacent,   // + combinator
-    CssSelectorRelationIndirectAdjacent, // ~ combinator
-    CssSelectorRelationShadowPseudo,     // Special case of shadow DOM pseudo elements / shadow pseudo element
-    CssSelectorRelationShadowDeep        // /shadow-deep/ combinator
+    CssSelMatchUnknown = 0,
+    CssSelMatchTag,                 // Example: div
+    CssSelMatchId,                  // Example: #id
+    CssSelMatchClass,               // example: .class
+    CssSelMatchPseudoClass,         // Example:  :nth-child(2)
+    CssSelMatchPseudoElement,       // Example: ::first-line
+    CssSelMatchPagePseudoClass,     // ??
+    CssSelMatchAttrExact,           // Example: E[foo="bar"]
+    CssSelMatchAttrSet,             // Example: E[foo]
+    CssSelMatchAttrList,            // Example: E[foo~="bar"]
+    CssSelMatchAttrHyphen,          // Example: E[foo|="bar"]
+    CssSelMatchAttrContain,         // css3: E[foo*="bar"]
+    CssSelMatchAttrBegin,           // css3: E[foo^="bar"]
+    CssSelMatchAttrEnd,             // css3: E[foo$="bar"]
+    CssSelMatchFirstAttr = CssSelMatchAttrExact,
+} CssSelectorMatch;
+
+
+typedef enum {
+    CssSelRelSubSelector,      // "No space" combinator
+    CssSelRelDescendant,       // "Space" combinator
+    CssSelRelChild,            // > combinator
+    CssSelRelDirectAdjacent,   // + combinator
+    CssSelRelIndirectAdjacent, // ~ combinator
+    CssSelRelShadowPseudo,     // Special case of shadow DOM pseudo elements / shadow pseudo element
+    CssSelRelShadowDeep        // /shadow-deep/ combinator
 } CssSelectorRelation;
-    
+
+
 typedef enum {
     CssPseudoNotParsed,
     CssPseudoUnknown,
@@ -164,89 +187,74 @@ typedef enum {
     CssPseudoHost,
     CssPseudoHostContext,
     CssPseudoShadow,
-    CssPseudoSpatialNavigationFocus,
+    CssPseudoSpatialNavFocus,
     CssPseudoListBox
 } CssPseudoType;
 
+
 typedef enum {
-    CssAttributeMatchTypeCaseSensitive,
-    CssAttributeMatchTypeCaseInsensitive,
+    CssAMTCaseSensitive,
+    CssAMTCaseInsensitive,
 } CssAttributeMatchType;
 
+
 typedef enum {
-    CSSPRSR_RVALUE_UNKNOWN = 0,
-    CSSPRSR_RVALUE_NUMBER = 1,
-    CSSPRSR_RVALUE_PERCENTAGE = 2,
-    CSSPRSR_RVALUE_EMS = 3,
-    CSSPRSR_RVALUE_EXS = 4,
-
-	// double
-    CSSPRSR_RVALUE_PX = 5,
-    CSSPRSR_RVALUE_CM = 6,
-    CSSPRSR_RVALUE_MM = 7,
-    CSSPRSR_RVALUE_IN = 8,
-    CSSPRSR_RVALUE_PT = 9,
-    CSSPRSR_RVALUE_PC = 10,
-    CSSPRSR_RVALUE_DEG = 11,
-    CSSPRSR_RVALUE_RAD = 12,
-    CSSPRSR_RVALUE_GRAD = 13,
-    CSSPRSR_RVALUE_MS = 14,
-    CSSPRSR_RVALUE_S = 15,
-    CSSPRSR_RVALUE_HZ = 16,
-    CSSPRSR_RVALUE_KHZ = 17,
-    CSSPRSR_RVALUE_DIMENSION = 18,
-    CSSPRSR_RVALUE_STRING = 19,
-    CSSPRSR_RVALUE_URI = 20,
-    CSSPRSR_RVALUE_IDENT = 21,
-    CSSPRSR_RVALUE_ATTR = 22,
-    CSSPRSR_RVALUE_COUNTER = 23,
-    CSSPRSR_RVALUE_RECT = 24,
-    CSSPRSR_RVALUE_RGBCOLOR = 25,
-
-    CSSPRSR_RVALUE_VW = 26,
-    CSSPRSR_RVALUE_VH = 27,
-    CSSPRSR_RVALUE_VMIN = 28,
-    CSSPRSR_RVALUE_VMAX = 29,
-    CSSPRSR_RVALUE_DPPX = 30,
-    CSSPRSR_RVALUE_DPI = 31,
-    CSSPRSR_RVALUE_DPCM = 32,
-    CSSPRSR_RVALUE_FR = 33,
-    CSSPRSR_RVALUE_UNICODE_RANGE = 102,
-    
-    CSSPRSR_RVALUE_PARSER_OPERATOR = 103,
-    CSSPRSR_RVALUE_PARSER_INTEGER = 104,
-    CSSPRSR_RVALUE_PARSER_HEXCOLOR = 105,
-    CSSPRSR_RVALUE_PARSER_FUNCTION = 0x100001,
-    CSSPRSR_RVALUE_PARSER_LIST     = 0x100002,
-    CSSPRSR_RVALUE_PARSER_Q_EMS    = 0x100003,
-    
-    CSSPRSR_RVALUE_PARSER_IDENTIFIER = 106,
-    
-    CSSPRSR_RVALUE_TURN = 107,
-    CSSPRSR_RVALUE_REMS = 108,
-    CSSPRSR_RVALUE_CHS = 109,
-    
-    CSSPRSR_RVALUE_COUNTER_NAME = 110,
-    
-    CSSPRSR_RVALUE_SHAPE = 111,
-    
-    CSSPRSR_RVALUE_QUAD = 112,
-    
-    CSSPRSR_RVALUE_CALC = 113,
-    CSSPRSR_RVALUE_CALC_PERCENTAGE_WITH_NUMBER = 114,
-    CSSPRSR_RVALUE_CALC_PERCENTAGE_WITH_LENGTH = 115,
-    CSSPRSR_RVALUE_VARIABLE_NAME = 116,
-    
-    CSSPRSR_RVALUE_PROPERTY_ID = 117,
-    CSSPRSR_RVALUE_VALUE_ID = 118
+    CSS_VALUE_UNKNOWN = 0,
+    CSS_VALUE_NUMBER = 1,
+    CSS_VALUE_PERCENTAGE = 2,
+    CSS_VALUE_EMS = 3,
+    CSS_VALUE_EXS = 4,
+    CSS_VALUE_PX = 5,
+    CSS_VALUE_CM = 6,
+    CSS_VALUE_MM = 7,
+    CSS_VALUE_IN = 8,
+    CSS_VALUE_PT = 9,
+    CSS_VALUE_PC = 10,
+    CSS_VALUE_DEG = 11,
+    CSS_VALUE_RAD = 12,
+    CSS_VALUE_GRAD = 13,
+    CSS_VALUE_MS = 14,
+    CSS_VALUE_S = 15,
+    CSS_VALUE_HZ = 16,
+    CSS_VALUE_KHZ = 17,
+    CSS_VALUE_DIMENSION = 18,
+    CSS_VALUE_STRING = 19,
+    CSS_VALUE_URI = 20,
+    CSS_VALUE_IDENT = 21,
+    CSS_VALUE_ATTR = 22,
+    CSS_VALUE_COUNTER = 23,
+    CSS_VALUE_RECT = 24,
+    CSS_VALUE_RGBCOLOR = 25,
+    CSS_VALUE_VW = 26,
+    CSS_VALUE_VH = 27,
+    CSS_VALUE_VMIN = 28,
+    CSS_VALUE_VMAX = 29,
+    CSS_VALUE_DPPX = 30,
+    CSS_VALUE_DPI = 31,
+    CSS_VALUE_DPCM = 32,
+    CSS_VALUE_FR = 33,
+    CSS_VALUE_UNICODE_RANGE = 102,
+    CSS_VALUE_PARSER_OPERATOR = 103,
+    CSS_VALUE_PARSER_INTEGER = 104,
+    CSS_VALUE_PARSER_HEXCOLOR = 105,
+    CSS_VALUE_PARSER_FUNCTION = 0x100001,
+    CSS_VALUE_PARSER_LIST     = 0x100002,
+    CSS_VALUE_PARSER_Q_EMS    = 0x100003,
+    CSS_VALUE_PARSER_IDENTIFIER = 106,
+    CSS_VALUE_TURN = 107,
+    CSS_VALUE_REMS = 108,
+    CSS_VALUE_CHS = 109,
+    CSS_VALUE_COUNTER_NAME = 110,
+    CSS_VALUE_SHAPE = 111,
+    CSS_VALUE_QUAD = 112,
+    CSS_VALUE_CALC = 113,
+    CSS_VALUE_CALC_PERCENTAGE_WITH_NUMBER = 114,
+    CSS_VALUE_CALC_PERCENTAGE_WITH_LENGTH = 115,
+    CSS_VALUE_VARIABLE_NAME = 116,
+    CSS_VALUE_PROPERTY_ID = 117,
+    CSS_VALUE_VALUE_ID = 118
 } CssValueUnit;
 
-//typedef enum {
-//    CSSPRSR_RVALUE_PARSER_OPERATOR = 0x100000,
-//    CSSPRSR_RVALUE_PARSER_FUNCTION = 0x100001,
-//    CSSPRSR_RVALUE_PARSER_LIST     = 0x100002,
-//    CSSPRSR_RVALUE_PARSER_Q_EMS    = 0x100003,
-//} CssParserValueUnit;
 
 typedef enum {
     CssValueInvalid = 0,
@@ -256,13 +264,16 @@ typedef enum {
     CssValueCustom = 0x100010,
 } CssValueID;
 
+
 typedef enum { CssParseError } CssErrorType;
+
 
 typedef struct {
     const char* local; // tag local name
     const char* prefix; // namesapce identifier
     const char* uri; // namesapce uri
 } CssQualifiedName;
+
 
 typedef struct {
   /** Data elements. This points to a dynamically-allocated array of capacity
@@ -275,8 +286,8 @@ typedef struct {
 
   /** Current array capacity. */
   unsigned int capacity;
-
 } CssArray;
+
 
 typedef struct {
     const char* encoding;
@@ -284,20 +295,24 @@ typedef struct {
     CssArray /* CssImportRule */ imports;
 } CssStylesheet;
 
+
 typedef struct {
     const char* name;
     CssRuleType type;
 } CssRule;
-    
+
+
 typedef struct {
     CssRule base;
     CssArray* /* CssSelector */ selectors;
     CssArray* /* CssDeclaration */ declarations;
 } CssStyleRule;
 
+
 typedef struct {
     const char* comment;
 } CssComment; // unused for right
+
 
 /**
  * The `@font-face` at-rule.
@@ -307,6 +322,7 @@ typedef struct {
     CssArray* /* CssDeclaration */ declarations;
 } CssFontFaceRule;
 
+
 /**
  * The `@host` at-rule.
  */
@@ -314,6 +330,7 @@ typedef struct {
     CssRule base;
     CssArray* /* CssRule */ host;
 } CssHostRule;
+
 
 /**
  * The `@import` at-rule.
@@ -330,6 +347,7 @@ typedef struct {
     CssArray* /* CssMediaQuery* */ medias;
 } CssImportRule;
 
+
 /**
  * The `@keyframes` at-rule.
  * Spec: http://www.w3.org/TR/css3-animations/#keyframes
@@ -342,11 +360,13 @@ typedef struct {
     const char* name;
     CssArray* /* CssKeyframe */ keyframes;
 } CssKeyframesRule;
-    
+
+
 typedef struct {
     CssArray* /* CssValue: `percentage`, `from`, `to` */ selectors;
     CssArray* /* CssDeclaration */ declarations;
 } CssKeyframe;
+
 
 /**
  * The `@media` at-rule.
@@ -364,11 +384,11 @@ typedef struct {
     CssArray* /* CssRule */ rules;
 } CssMediaRule;
 
+
 /**
  * Media Query Exp List
  * Spec: http://www.w3.org/TR/mediaqueries-4/
  */
-
 typedef struct {
     CssMediaQueryRestrictor restrictor;
     const char* type;
@@ -376,11 +396,13 @@ typedef struct {
     bool ignored;
 } CssMediaQuery;
 
+
 typedef struct {
     const char* feature;
     CssArray* values;
     const char* raw;
 } CssMediaQueryExp;
+
 
 typedef struct {
     const char* value;
@@ -389,12 +411,13 @@ typedef struct {
             int a; // Used for :nth-*
             int b; // Used for :nth-*
         } nth;
-        CssAttributeMatchType attributeMatchType; // used for attribute selector (with value)
+        CssAttributeMatchType attrMatchType; // used for attribute selector (with value)
     } bits;
     CssQualifiedName* attribute;
     const char* argument; // Used for :contains, :lang, :nth-*
     CssArray* selectors; // Used for :any and :not
 } CssSelectorRareData;
+
 
 typedef struct CssSelector {
     size_t specificity;
@@ -405,28 +428,32 @@ typedef struct CssSelector {
     CssSelectorRareData* data;
     struct CssSelector* tagHistory;
 } CssSelector;
-    
+
+
 unsigned css_calc_specificity_for_selector(CssSelector* selector);
 
+
 typedef struct {
-	// property name
+    // property name
     const char* property;
-	
-	// property value
+    
+    // property value
     CssArray* /* CssValue */ values;
     const char* string;
 
-	// is this property marked important
+    // is this property marked important
     bool important;
 
-	// origin css text of the property
+    // origin css text of the property
     const char* raw;
 } CssDeclaration;
+
 
 typedef struct {
     const char* name;
     CssArray* args;
 } CssValueFunction;
+
 
 typedef struct CssValue {
     CssValueID id;
@@ -442,14 +469,12 @@ typedef struct CssValue {
     const char* raw;
 } CssValue;
 
+
 /**
  * The `@charset` at-rule.
  */
 typedef struct {
     CssRule base;
-    /**
-     * The encoding information
-     */
     const char* encoding;
 } CssCharsetRule;
     
@@ -462,32 +487,29 @@ typedef struct {
     char message[CSS_ERROR_MSG_SIZE];
 } CssError;
 
-// TODO: @document
-// TODO: @page
-// TODO: @supports
-// TODO: custom-at-rule
 
 /**
  * Parser mode
  */
 typedef enum CssParserMode {
-	// Normal CSS content used in External CSS files or Internal CSS, may include more than 1 css rules.
+    // Normal CSS content used in External CSS files or Internal CSS,
+    //  may include more than 1 css rules.
     CssParserModeStylesheet,
 
-	// Single CSS rule like "@import", "selector{...}"
+    // Single CSS rule like "@import", "selector{...}"
     CssParserModeRule,
 
     CssParserModeKeyframeRule,
     CssParserModeKeyframeKeyList,
     CssParserModeMediaList,
 
-	// CSS property value like "1px", "1em", "#eee"
+    // CSS property value like "1px", "1em", "#eee"
     CssParserModeValue,
 
-	// CSS selector like ".pages.active"
+    // CSS selector like ".pages.active"
     CssParserModeSelector,
 
-	// Inline stylesheet like "width: 20px; height: 20px;"
+    // Inline stylesheet like "width: 20px; height: 20px;"
     CssParserModeDeclarationList,
 } CssParserMode;
     
@@ -508,6 +530,7 @@ typedef struct CssInternalOutput {
     CssArray /* CssError */ errors;
 } CssOutput;
 
+
 /**
  *  Parse a complete or fragmental CSS string
  *
@@ -517,7 +540,8 @@ typedef struct CssInternalOutput {
  *
  *  @return The result of parsing
  */
-CssOutput* css_parse_string(const char* str, size_t len, CssParserMode mode);
+CSSPARSER_API CssOutput* css_parse_string(const char* str, size_t len, CssParserMode mode);
+
 
 /**
  *  Parse a complete CSS file
@@ -526,14 +550,16 @@ CssOutput* css_parse_string(const char* str, size_t len, CssParserMode mode);
  *
  *  @return The result of parsing
  */
-CssOutput* css_parse_file(FILE* fp);
+CSSPARSER_API CssOutput* css_parse_file(FILE* fp);
+
 
 /**
  *  Free the output
  *
  *  @param output The result of parsing
  */
-void css_destroy_output(CssOutput* output);
+CSSPARSER_API void css_destroy_output(CssOutput* output);
+
 
 /**
  *  Print the formatted CSS string
@@ -542,10 +568,10 @@ void css_destroy_output(CssOutput* output);
  *
  *  @return The origin output
  */
-CssOutput* css_dump_output(CssOutput* output);
+CSSPARSER_API CssOutput* css_dump_output(CssOutput* output);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* defined(_CSS_PARSER__API_) */
+#endif /* defined(_CSS_PARSER_PULIC_API_) */

@@ -1,4 +1,7 @@
-# Katana (CssParser) - A pure-C CSS parser.
+# cssparser (katana-parser) - A pure-C CSS parser.
+
+[katana-parser](https://gitee.com/mirrors/katana-parser)
+
 
 CssParser is an implementation of the [CSS][] \(Cascading Style Sheet\) parsing algorithm implemented as a pure C library with no outside dependencies. It's designed to serve as a building block for other tools and libraries such as linters, validators, templating languages, and refactoring and analysis tools.
 
@@ -38,18 +41,18 @@ $ sudo make install
 CssParser comes with full pkg-config support, so you can use the pkg-config to print the flags needed to link your program against it:
 
 ```bash
-$ pkg-config --cflags katana         # print compiler flags
-$ pkg-config --libs katana           # print linker flags
-$ pkg-config --cflags --libs katana  # print both
+$ pkg-config --cflags cssparser         # print compiler flags
+$ pkg-config --libs cssparser           # print linker flags
+$ pkg-config --cflags --libs cssparser  # print both
 ```
 
 For example:
 
 ```bash
-$ gcc examples/dump_stylesheet.c `pkg-config --cflags --libs katana` -o dump
+$ gcc examples/dump_stylesheet.c `pkg-config --cflags --libs cssparser` -o dump
 ```
 
-If package katana was **not found in the pkg-config** search path, perhaps you should add the directory containing `katana.pc` to the `PKG_CONFIG_PATH` environment variable as following:
+If package cssparser was **not found in the pkg-config** search path, perhaps you should add the directory containing `cssparser.pc` to the `PKG_CONFIG_PATH` environment variable as following:
 
 ```bash
 $ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
@@ -60,17 +63,17 @@ See the pkg-config man page for more info.
 Basic Usage
 ===========
 
-Within your program, you need to include "katana.h" and then issue a call to `katana_parse`:
+Within your program, you need to include "cssparser.h" and then issue a call to `css_parse_string`:
 
 ```C
-#include "katana.h"
+#include "cssparser.h"
 
 int main() {
   const char* css = "selector { property: value }";
-  CssParserOutput* output = katana_parse(css, strlen(css), CssParserParserModeStylesheet);
+  CssParserOutput* output = css_parse_string(css, strlen(css), CssParserParserModeStylesheet);
   // Do stuff with output, eg. print the input style
-  katana_dump_output(output);
-  katana_destroy_output(output);
+  css_dump_output(output);
+  css_destroy_output(output);
 }
 ```
 

@@ -3,4 +3,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\examples\test.c" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="test.css" />
+  </ItemGroup>
 </Project>

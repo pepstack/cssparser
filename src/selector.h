@@ -1,4 +1,4 @@
-/**
+/*******************************************************************************
  * Copyright (c) 2015 QFish <im@qfi.sh>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,12 +18,10 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- */
+ ******************************************************************************/
+#ifndef _CSS__SELECTOR_
+#define _CSS__SELECTOR_
 
-#ifndef __Css__selector__
-#define __Css__selector__
-
-#include <stdio.h>
 #include "cssparser.h"
 #include "cssparser_i.h"
 
@@ -51,4 +49,4 @@ bool cssprsr_selector_is_insertion_point_crossing(CssSelector* selector);
 }
 #endif
 
-#endif /* defined(__Css__selector__) */
+#endif /* defined(_CSS__SELECTOR_) */

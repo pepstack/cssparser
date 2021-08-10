@@ -1,0 +1,9 @@
+/* test.css */
+hr {color: sienna;}
+p {margin-left: 20px;color:red;}
+body {
+    background-image: url("images/back40.gif");
+}
+div {
+    color:black;
+}
