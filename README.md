@@ -50,7 +50,7 @@ Alternatively, you can build it with Visual Studio for Windows by open the solut
 Basic Usage
 ===========
 
-Within your program, you only need to include "CssParser.h":
+Within your program, you only need to include "cssparser.h":
 
 
 ```C
@@ -83,15 +83,9 @@ If you're unwilling to do this, it would be most helpful if you could file bug r
 References
 ==========
 
-[CSS](http://www.w3.org/Style/CSS/current-work)
-
-[CSS-syntax](http://www.w3.org/TR/css3-syntax)
-
-[Gumbo H5 Parser](https://github.com/google/gumbo-parser)
-
-[reworkcss/css](https://github.com/reworkcss/css)
-
-[Official W3C Test Suites](http://www.w3.org/Style/CSS/Test/)
-
-[semantic versioning](http://semver.org/)
-
+* [CSS](http://www.w3.org/Style/CSS/current-work)
+* [CSS-syntax](http://www.w3.org/TR/css3-syntax)
+* [Gumbo H5 Parser](https://github.com/google/gumbo-parser)
+* [reworkcss/css](https://github.com/reworkcss/css)
+* [Official W3C Test Suites](http://www.w3.org/Style/CSS/Test/)
+* [semantic versioning](http://semver.org/)
