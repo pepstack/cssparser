@@ -147,6 +147,10 @@ examples/.dirstamp
 fragment
 cssparser.pc
 libtool
+
 m4/
-src/.deps/
-src/.dirstamp
+.deps/
+.dirstamp
+
+*~
+~*
