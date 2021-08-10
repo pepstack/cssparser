@@ -32,7 +32,7 @@ Installation
 
 To build and install the library on Linux or MingW (for win32), enter the root of distribution in bash shell:
 
-**libtool** is required for building project.
+**libtool** is required for building project (e.g.: yum install libtool).
 
 ```bash
 $ ./autogen.sh
@@ -54,7 +54,7 @@ Within your program, you only need to include "CssParser.h":
 
 
 ```C
-#include "CssParser.h"
+#include "cssparser.h"
 
 int main()
 {
@@ -67,6 +67,8 @@ int main()
 }
 ```
 
+And further more, some practical samples would be found in examples folder.
+
 See the API documentation and examples for more details.
 
 Contributing
@@ -78,10 +80,12 @@ Patches and pull requests are also welcome.
 
 If you're unwilling to do this, it would be most helpful if you could file bug reports that include detailed prose about where in the code the error is and how to fix it, but leave out exact source code.
 
+References
+==========
 
-[CSS]: http://www.w3.org/Style/CSS/current-work
-[CSS-syntax]: http://www.w3.org/TR/css3-syntax
-[Gumbo]: https://github.com/google/gumbo-parser
-[reworkcss/css]: https://github.com/reworkcss/css
-[Official W3C Test Suites]: http://www.w3.org/Style/CSS/Test/
-[semantic versioning]: http://semver.org/
+[CSS](http://www.w3.org/Style/CSS/current-work)
+[CSS-syntax](http://www.w3.org/TR/css3-syntax)
+[Gumbo H5 Parser](https://github.com/google/gumbo-parser)
+[reworkcss/css](https://github.com/reworkcss/css)
+[Official W3C Test Suites](http://www.w3.org/Style/CSS/Test/)
+[semantic versioning](http://semver.org/)

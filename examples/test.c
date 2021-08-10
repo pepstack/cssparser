@@ -2,8 +2,7 @@
 //  test.c
 //  CssParser
 //
-//  Created by QFish on 4/6/15.
-//  Copyright (c) 2015 QFish. All rights reserved.
+//  Created by cheungmine
 //
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,6 +30,7 @@ void dump_properties(CssArray *props);
 int main(int argc, const char * argv[])
 {
     WINDOWS_CRTDBG_ON
+
     CssOutput* output = NULL;
 
     if (argc == 2) {
