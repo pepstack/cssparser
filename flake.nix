@@ -40,7 +40,7 @@
         in
         {
           default = pkgs.mkShell {
-            buildInputs = with pkgs; [ autoconf automake libtool gnumake autoreconfHook ];
+            packages = with pkgs; [ autoconf automake libtool gnumake autoreconfHook ];
           };
         });
     };
